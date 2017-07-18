@@ -1,0 +1,83 @@
+Tablet app metadata
+================
+Rick O. Gilmore
+2017-07-18 15:19:28
+
+Preliminaries
+-------------
+
+Note that the `results = 'hide'` flag is set in the chunks below this avoids writing sensitive data to reports that might be pushed to public/open access directories.
+
+Data were stored in .xml files on Adolph lab server within participant-specific folders. These are now copied to a local set of directories stored in a shared Box folder. The path on Rick's computer is:
+
+~/Box Sync/play-demog-data-from-app-pilots/data/xml
+
+Opening a sample XML file from a sample participant
+---------------------------------------------------
+
+``` r
+# Install package to work with XML files if needed
+# install.packages("XML")
+
+# Then load into current space
+library("XML")
+
+xml_list <- list.files(data_path, pattern = "\\.xml$", full.names = TRUE)
+
+participant_index <- 1
+
+# Surround in () to print variable
+(xml_file <- xmlParse(file = xml_list[[participant_index]]))
+xml_top <- xmlRoot(xml_file) # grabs top node
+```
+
+It looks like we have the following overall structure:
+
+    <Combined_Questionnaires>
+      <phone_questionnaire>
+        Infant characteristics
+        Mom characteristics
+        Family characteristics
+      <home_questionnaire>
+        Locomotor milestones
+        MacArthur
+        Media Use
+        Rothbart ECBQ
+        Home environment
+
+I suspect that we will want separate data files for each of the questionnaire measures and a single file with the demographic data collected during the phone questionnaire.
+
+### Phone questionnaire data
+
+``` r
+(xml_top[[5]]) # gives data from <phone_questionnaire>
+```
+
+### Home questionnaire data
+
+``` r
+(xml_top[[6]]) # gives <home_questionnaire data>
+
+xml_top[[6]][[2]] # gives sex and test date
+xml_top[[6]][[3]] # gives child exact age and agegroup
+xml_top[[6]][[4]] # gives date of child's 6 mo birthday, 5:24 generate similar
+                 # dates up to 24 mos
+xml_top[[6]][[23]] # footwear data
+
+xml_top[[6]][[25]] # loc_milestones_walk
+xml_top[[6]][[26]] # walk_onset_mos
+
+xml_top[[6]][[28]] # loc_milestones_crawl
+xml_top[[6]][[29]] # crawl_onset_mos
+
+xml_top[[6]][[32]] # macarthur_2_e
+
+xml_top[[6]][[33]] # media_use_p1
+xml_top[[6]][[34]] # media_use_p2
+xml_top[[6]][[35]] # media_use_p3
+xml_top[[6]][[36]] # media_use_p4
+
+xml_top[[6]][[37]] # Rothbart ECBQ
+
+xml_top[[6]][[38]] # HOME environment
+```
