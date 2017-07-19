@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Preliminaries
 
-Note that the `results = 'hide'` flag is set in the chunks below this avoids writing sensitive data to reports that might be pushed to public/open access directories.
+Note that the `results = 'hide'` flag is set in the chunks below. This avoids writing sensitive data to reports that might be pushed to public/open access directories.
 
 Data were stored in .xml files on Adolph lab server within participant-specific folders. These are now copied to a local set of directories stored in a shared Box folder. The path on Rick's computer is:
 
